@@ -370,7 +370,9 @@ function drawTriangle(a,b,c,ma,mb,mc){
  
     var canvas = document.getElementById('myCanvas');
     var context = canvas.getContext('2d');
-    context.clearRect ( 0 , 0 , 300 , 200 );
+    var width = canvas.width;
+    var height = canvas.height;
+    context.clearRect ( 0 , 0 , width , height );
  
     context.beginPath();
     context.moveTo(0,b);

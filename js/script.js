@@ -463,9 +463,8 @@ function clear(){
 }
  
 function getVal(x){
-    var q = $('#input' + x).val();
-    var q = parseInt(q);
-    return q;
+    return parseInt($('#input' + x).val()) || 0;
+
 }
  
 function setVal(x, nv){

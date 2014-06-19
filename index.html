@@ -21,19 +21,6 @@
     </div>
 
 
-
-<div style="display:inline-block">
-<select name="side" id="choice">
-
-<option value="ASA">ASA</option>
-<option value="SAS">SAS</option>
-<option value="SSS">SSS</option>
-<option value="SSA">SSA</option>
-
-</select>
-<button type="button" onclick="setinputs()" style="border:solid black 2px;">Complete triangle!</button> 
-
-</div>
 <div style="display:none;">
 	<p id="test" class="sm">Select which method you're using. Angles in degrees.</p>
 	<p id="test1" class="sm">Derp.</p>
@@ -46,6 +33,20 @@
 <p id="box1"><span id="span1">Side a</span> <input type="text" name="inp1" id="input1"></p>
 <p id="box2"><span id="span2">Side b</span> <input type="text" name="inp2" id="input2"></p>
 <p id="box3"><span id="span3">Angle A</span> <input type="text" name="inp3" id="input3"></p>
+
+
+<div style="display:inline-block">
+	<select name="side" id="choice">
+
+		<option value="ASA">ASA</option>
+		<option value="SAS">SAS</option>
+		<option value="SSS">SSS</option>
+		<option value="SSA">SSA</option>
+
+	</select>
+
+	<button type="button" onclick="setinputs()" style="border:solid black 2px;">Complete triangle!</button> 
+</div>
 
 <p class="sm"><span id="span4"></span></p>
 <p class="sm"><span id="span5"></span></p>

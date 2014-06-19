@@ -1,1 +1,18 @@
-<gap:plugin name="com.adobe.plugins.fastcanvas" version="1.0.1" />
+<?xml version="1.0" encoding="UTF-8" ?>
+    <widget xmlns   = "http://www.w3.org/ns/widgets"
+        xmlns:gap   = "http://phonegap.com/ns/1.0"
+        id          = "org.kaufer.TrigTriangleSolver"
+        versionCode = "10" >
+
+    <name>Trigonometric Triangle Solver</name>
+
+    <description>
+        Automatic solver for triangles. Retrieves missing angle measurements and side lengths, along with area. In Beta.
+    </description>
+
+    <author href="https://build.phonegap.com" email="support@phonegap.com">
+        Matthew Kaufer
+    </author>
+
+    <gap:plugin name="com.adobe.plugins.fastcanvas" version="1.0.1" />
+</widget>

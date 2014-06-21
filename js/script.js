@@ -117,9 +117,13 @@ function setinputs()
             break;
  
     }
- 
- 
- 
+}
+
+function checkValues(){
+    for(var i = 0; i < arguments.length; i++)
+        if(isNaN(arguments[i]))
+            return false;
+    return true;
 }
  
 function ASA(){
@@ -140,9 +144,14 @@ function ASA(){
     a = Math.round(a * 1000)/1000;
     b = Math.round(b * 1000)/1000;
     mc = Math.round(mc * 1000)/1000;
-    changespan(4,"Angle C: " + mc +"&deg");
-    changespan(5,"Side b: " + b);
-    changespan(6,"Side a: " + a);
+    if(checkValues(a,b,mc)){
+        changespan(4,"Angle C: " + mc +"&deg");
+        changespan(5,"Side b: " + b);
+        changespan(6,"Side a: " + a);
+    }
+    else
+        NaNs();
+
  
  
 }
@@ -175,10 +184,13 @@ function SAS(){
     c = Math.round(c * 1000)/1000;
     mb = Math.round(mb * 1000)/1000;
     mc = Math.round(mc * 1000)/1000;
-    changespan(4,"Side a: " + a);
-    changespan(5,"Angle B: " + mb + "&deg");
-    changespan(6,"Angle C: " + mc + "&deg");
- 
+    if(checkValues(c,mb,mc)){
+        changespan(4,"Side a: " + a);
+        changespan(5,"Angle B: " + mb + "&deg");
+        changespan(6,"Angle C: " + mc + "&deg");
+    }
+    else
+        NaNs();
 }
  
  
@@ -201,9 +213,14 @@ function SSS(){
     ma = Math.round(ma * 1000)/1000;
     mb = Math.round(mb * 1000)/1000;
     mc = Math.round(mc * 1000)/1000;
-    changespan(4,"Angle A: " + ma +"&deg");
-    changespan(5,"Angle B: " + mb +"&deg");
-    changespan(6,"Angle C: " + mc +"&deg");
+    if(checkValues(ma,mb,mc)){
+        changespan(4,"Angle A: " + ma +"&deg");
+        changespan(5,"Angle B: " + mb +"&deg");
+        changespan(6,"Angle C: " + mc +"&deg");        
+    }
+    else
+        NaNs();
+
  
 }
  
@@ -282,9 +299,14 @@ function SSA(){
         c = Math.round(c * 1000)/1000;
         mc = Math.round(mc * 1000)/1000;    
  
-        changespan(4,"Side c: " + c);
-        changespan(5,"Angle B: " + mb + "&deg");
-        changespan(6,"Angle C: " + mc + "&deg");  
+        if(checkValues(mb,c,mc)){
+            changespan(4,"Side c: " + c);
+            changespan(5,"Angle B: " + mb + "&deg");
+            changespan(6,"Angle C: " + mc + "&deg");              
+        }
+        else
+            NaNs();
+
  
     }
  
@@ -311,10 +333,14 @@ function SSA(){
         mb2 = Math.round(mb2 * 1000)/1000;
         c2 = Math.round(c2 * 1000)/1000;
         mc2 = Math.round(mc2 * 1000)/1000;        
- 
-        changespan(4,"Side c : " + c1 + " OR | " + c2);
-        changespan(5,"Angle B : " + mb1 + "&deg OR | " + mb2 + "&deg");
-        changespan(6,"Angle C : " + mc1 + "&deg OR | " + mc2 + "&deg");
+        if(checkValues(mb1,c1,mc1,mb2,c2,mc2)){
+            changespan(4,"Side c : " + c1 + " OR " + c2);
+            changespan(5,"Angle B : " + mb1 + "&deg OR " + mb2 + "&deg");
+            changespan(6,"Angle C : " + mc1 + "&deg OR " + mc2 + "&deg");            
+        }
+        else
+            NaNs();
+
  
  
     }
@@ -322,6 +348,12 @@ function SSA(){
  
 }
  
+function NaNs(){
+    changespan(4,"Invalid");
+    changespan(5,"Invalid");
+    changespan(6,"Invalid");
+}
+
 function getX(f,mf)
 {
     return f * Math.cos(mf);
@@ -338,7 +370,10 @@ function getY(f,mf)
 function getArea(b, c, ma){
     var ar = 0.5 * b * c * Math.sin(ma * Math.PI / 180);
     ar = Math.round(ar * 1000) / 1000.0;
-    $('#area').html(ar + " units squared.");
+    if(!isNaN(ar))
+        $('#area').html(ar + " units squared.");
+    else
+        $('#area').html("Invalid");
 }
  
 function getATwo(b, c, ma, c2){
@@ -355,13 +390,13 @@ function drawTriangle(a,b,c,ma,mb,mc){
     ma = ma * Math.PI / 180;
     mb = mb * Math.PI / 180;
     mc = mc * Math.PI / 180;
- 
-
-
-    var rat = 50.0 / b;
+    var rat = 100.0 / b;
     a = a * rat;
-    b = b * rat;
-    c = c * rat;
+    b = b * rat / 5.0;
+    c = c * rat;     
+
+
+
 
 
 
@@ -374,11 +409,20 @@ function drawTriangle(a,b,c,ma,mb,mc){
     var height = canvas.height;
     context.clearRect ( 0 , 0 , width , height );
  
+    while(b + c > height){
+        var r = 0.99;
+        a *= 0.99;
+        b *= 0.99;
+        c *= 0.99;
+    }
+
+    console.log(a + ":" + b + ":" + c);
+
     context.beginPath();
     context.moveTo(0,b);
     context.lineTo(0,b + c);
     context.stroke();
-   
+    console.log(getX(a,mb - hp) + ":" + getY(a,mb - hp) + c + b);
     context.lineTo(getX(a,mb - hp),getY(a,mb - hp) + c + b);      
     context.stroke();
  
@@ -388,6 +432,8 @@ function drawTriangle(a,b,c,ma,mb,mc){
  
  
     context.closePath();
+    var coords = [[0,b], [0,b+c],[getX(a,mb - hp),getY(a,mb - hp) + c + b]];
+    console.log(coords);
  
 }
  
